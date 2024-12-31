@@ -5,6 +5,7 @@ import {
   Matches,
   IsString,
   IsNotEmpty,
+  IsOptional,
 } from 'class-validator';
 import { Prisma, Role } from '@prisma/client';
 
@@ -28,5 +29,6 @@ export class SignupDto implements Prisma.UserCreateInput {
   password: string;
 
   @IsEnum(Role)
+  @IsOptional()
   role: Role;
 }

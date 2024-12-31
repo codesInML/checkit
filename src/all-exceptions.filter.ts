@@ -37,11 +37,7 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
 
     if (exception instanceof HttpException) {
       responseObject.status_code = exception.getStatus();
-      if (exception.getResponse() instanceof Object) {
-        responseObject.response = JSON.stringify(exception.getResponse());
-      } else {
-        responseObject.response = exception.getResponse();
-      }
+      responseObject.response = exception.getResponse();
     } else if (exception instanceof PrismaClientValidationError) {
       responseObject.status_code = 422;
       responseObject.response = exception.message.replaceAll(/\n/g, '');
@@ -52,7 +48,12 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
 
     response.status(responseObject.status_code).json(responseObject);
 
-    this.logger.error(responseObject.response, AllExceptionsFilter.name);
+    this.logger.error(
+      typeof responseObject.response == 'string'
+        ? responseObject.response
+        : JSON.stringify(responseObject.response),
+      AllExceptionsFilter.name,
+    );
 
     super.catch(exception, host);
   }

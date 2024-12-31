@@ -30,15 +30,35 @@ enum Role {
   CUSTOMER
 }
 
+enum OrderStatus {
+  REVIEWING
+  PROCESSING
+  COMPLETED
+  CANCELLED
+}
+
 model Order {
-  id             Int      @id @default(autoincrement())
-  user_id        Int
-  name           String
-  description    String?
-  specifications String?
-  quantity       Int
-  due_date       String?
-  user           User     @relation(fields: [user_id], references: [id])
-  created_at     DateTime @default(now())
-  updated_at     DateTime @updatedAt
+  id              Int         @id @default(autoincrement())
+  user_id         Int
+  name            String
+  description     String?
+  specifications  String?
+  quantity        Int
+  due_date        String?
+  status          OrderStatus @default(REVIEWING)
+  closing_summary String?
+  user            User        @relation(fields: [user_id], references: [id])
+  created_at      DateTime    @default(now())
+  updated_at      DateTime    @updatedAt
+  Chat            Chat[]
+}
+
+model Chat {
+  id               Int      @id @default(autoincrement())
+  message          String
+  is_from_customer Boolean
+  order            Order    @relation(fields: [order_id], references: [id])
+  order_id         Int
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }

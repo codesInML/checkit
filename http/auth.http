@@ -7,11 +7,10 @@ POST http://localhost:8080/api/v1/auth/signup
 Content-Type: application/json
 
 {
-    "first_name": "Ifeoluwa",
+    "first_name": "Ezekiel",
     "last_name": "Olubo",
-    "email": "ife@olubo.com",
-    "password": "somepassword123",
-    "role": "ADMIN"
+    "email": "ifeoluwa@olubo.com",
+    "password": "somepassword123"
 }
 
 ### Login
@@ -19,6 +18,6 @@ POST http://localhost:8080/api/v1/auth/login
 Content-Type: application/json
 
 {
-    "email": "ife@olubo.com",
+    "email": "ifeoluwa@olubo.com",
     "password": "somepassword123"
 }

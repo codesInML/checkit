@@ -1,26 +1,46 @@
 import { Injectable } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
+import { DatabaseService } from 'src/database/database.service';
+import { OrderStatus } from '@prisma/client';
 
 @Injectable()
 export class OrderService {
-  create(createOrderDto: CreateOrderDto) {
-    return 'This action adds a new order';
+  constructor(private readonly databaseService: DatabaseService) {}
+
+  async create(createOrderDto: CreateOrderDto, user_id: number) {
+    return this.databaseService.order.create({
+      data: { ...createOrderDto, user: { connect: { id: user_id } } },
+    });
   }
 
-  findAll() {
-    return `This action returns all order`;
+  async findAll() {
+    return this.databaseService.order.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} order`;
+  async findAllUserOrders(user_id: number) {
+    return this.databaseService.order.findMany({ where: { user_id } });
   }
 
-  update(id: number, updateOrderDto: UpdateOrderDto) {
-    return `This action updates a #${id} order`;
+  async findOne(id: number) {
+    return this.databaseService.order.findUnique({ where: { id } });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} order`;
+  async update(id: number, updateOrderDto: UpdateOrderDto) {
+    return this.databaseService.order.update({
+      where: { id },
+      data: updateOrderDto,
+    });
+  }
+
+  async cancelOrder(id: number) {
+    return this.databaseService.order.update({
+      where: { id },
+      data: { status: OrderStatus.CANCELLED },
+    });
+  }
+
+  async remove(id: number) {
+    return this.databaseService.order.delete({ where: { id } });
   }
 }

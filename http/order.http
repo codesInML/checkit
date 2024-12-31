@@ -1,0 +1,12 @@
+### Create Order
+POST http://localhost:8080/api/v1/order
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJyb2xlIjoiQ1VTVE9NRVIiLCJpYXQiOjE3MzU2NjE1NjQsImV4cCI6MTczNTY2NTE2NH0.EQBxvNMLEvQBnX5KlD42NhsLMaIC7WLdAVxh3ZSKrTk
+
+{
+    "name": "Order 1",
+    "description": "This is the first order",
+    "specifications": "This is the first order specifications",
+    "quantity": 10,
+    "due_date": "2021-10-01"
+}
