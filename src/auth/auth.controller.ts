@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   ConflictException,
   Controller,
@@ -15,8 +14,8 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('signup')
-  async signup(@Body() createUserDto: SignupDto) {
-    const { email, password, first_name, last_name, role } = createUserDto;
+  async signup(@Body() signupDto: SignupDto) {
+    const { email, password, first_name, last_name, role } = signupDto;
     const user = await this.authService.findByEmail(email);
     if (user) throw new ConflictException('Email already exists');
 
