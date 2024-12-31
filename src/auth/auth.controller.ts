@@ -2,19 +2,22 @@ import {
   Body,
   ConflictException,
   Controller,
+  Ip,
   Post,
   UnauthorizedException,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignupDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
+import { LoggerService } from 'src/logger/logger.service';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+  private readonly logger = new LoggerService(AuthController.name);
 
   @Post('signup')
-  async signup(@Body() signupDto: SignupDto) {
+  async signup(@Body() signupDto: SignupDto, @Ip() ip: string) {
     const { email, password, first_name, last_name, role } = signupDto;
     const user = await this.authService.findByEmail(email);
     if (user) throw new ConflictException('Email already exists');
@@ -29,11 +32,13 @@ export class AuthController {
       role,
     });
 
+    this.logger.log(`User with email ${email} signed up\t${ip}`);
+
     return {};
   }
 
   @Post('login')
-  async login(@Body() loginDto: LoginDto) {
+  async login(@Body() loginDto: LoginDto, @Ip() ip: string) {
     const { email, password } = loginDto;
 
     const user = await this.authService.findByEmail(email);
@@ -51,6 +56,7 @@ export class AuthController {
       user.role,
     );
 
+    this.logger.log(`User with email ${email} logged in\t${ip}`);
     return { accessToken };
   }
 }
