@@ -32,7 +32,10 @@ export class AuthController {
       role,
     });
 
-    this.logger.log(`User with email ${email} signed up\t${ip}`);
+    this.logger.log(
+      `User with email ${email} signed up\t${ip}`,
+      AuthController.name,
+    );
 
     return {};
   }
@@ -56,7 +59,10 @@ export class AuthController {
       user.role,
     );
 
-    this.logger.log(`User with email ${email} logged in\t${ip}`);
+    this.logger.log(
+      `User with email ${email} logged in\t${ip}`,
+      AuthController.name,
+    );
     return { accessToken };
   }
 }

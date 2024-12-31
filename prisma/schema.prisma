@@ -19,12 +19,26 @@ model User {
   last_name  String
   email      String   @unique
   password   String
-  role       Role
+  role       Role     @default(CUSTOMER)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  orders     Order[]
 }
 
 enum Role {
   ADMIN
   CUSTOMER
+}
+
+model Order {
+  id             Int      @id @default(autoincrement())
+  user_id        Int
+  name           String
+  description    String?
+  specifications String?
+  quantity       Int
+  due_date       String?
+  user           User     @relation(fields: [user_id], references: [id])
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
 }
