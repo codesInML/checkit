@@ -1,0 +1,20 @@
+### Signup
+POST http://localhost:8080/auth/signup
+Content-Type: application/json
+
+{
+    "first_name": "Ifeoluwa",
+    "last_name": "Olubo",
+    "email": "ife@olubo.com",
+    "password": "somepassword123",
+    "role": "ADMIN"
+}
+
+### Login
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+    "email": "ife@olubo.com",
+    "password": "somepassword123"
+}
