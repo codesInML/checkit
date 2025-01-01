@@ -23,6 +23,7 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   orders     Order[]
+  Chat       Chat[]
 }
 
 enum Role {
@@ -59,6 +60,8 @@ model Chat {
   is_from_customer Boolean
   order            Order    @relation(fields: [order_id], references: [id])
   order_id         Int
+  user             User     @relation(fields: [sender_id], references: [id])
+  sender_id        Int
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 }

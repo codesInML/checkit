@@ -8,6 +8,7 @@ import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { LoggerModule } from './logger/logger.module';
 import { OrderModule } from './order/order.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { OrderModule } from './order/order.module';
     ]),
     LoggerModule,
     OrderModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: ThrottlerGuard }],

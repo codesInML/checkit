@@ -47,8 +47,15 @@ export class OrderController {
   }
 
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.orderService.findOne(id);
+  async findOne(@Param('id', ParseIntPipe) id: number, @Req() req) {
+    const { user_id, role } = req.user;
+    const order = await this.orderService.findOne(id);
+    if (!order) throw new NotFoundException('Order not found');
+
+    if (user_id !== order.user_id && role !== Role.ADMIN)
+      throw new ForbiddenException('Not allowed');
+
+    return order;
   }
 
   @Patch(':id')
@@ -81,6 +88,8 @@ export class OrderController {
       `Cancelled order ${id} for user ${user_id}`,
       OrderController.name,
     );
+
+    return { message: 'Order cancelled' };
   }
 
   @Delete(':id')
@@ -97,7 +106,7 @@ export class OrderController {
     return { message: 'Order deleted' };
   }
 
-  private async validateIsUserOrder(id: number, user_id: number) {
+  async validateIsUserOrder(id: number, user_id: number) {
     const order = await this.orderService.findOne(id);
     if (!order) throw new NotFoundException('Order not found');
 

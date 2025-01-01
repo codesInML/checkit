@@ -4,9 +4,35 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJyb2xlIjoiQ1VTVE9NRVIiLCJpYXQiOjE3MzU2NjE1NjQsImV4cCI6MTczNTY2NTE2NH0.EQBxvNMLEvQBnX5KlD42NhsLMaIC7WLdAVxh3ZSKrTk
 
 {
-    "name": "Order 1",
-    "description": "This is the first order",
-    "specifications": "This is the first order specifications",
+    "name": "Order 2",
+    "description": "This is the second order",
+    "specifications": "This is the second order specifications",
     "quantity": 10,
     "due_date": "2021-10-01"
 }
+
+### Get Order
+GET http://localhost:8080/api/v1/order/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJyb2xlIjoiQ1VTVE9NRVIiLCJpYXQiOjE3MzU2NjE1NjQsImV4cCI6MTczNTY2NTE2NH0.EQBxvNMLEvQBnX5KlD42NhsLMaIC7WLdAVxh3ZSKrTk
+
+### Get All Orders
+GET http://localhost:8080/api/v1/order
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJyb2xlIjoiQ1VTVE9NRVIiLCJpYXQiOjE3MzU2NjE1NjQsImV4cCI6MTczNTY2NTE2NH0.EQBxvNMLEvQBnX5KlD42NhsLMaIC7WLdAVxh3ZSKrTk
+
+### Update Order
+PATCH http://localhost:8080/api/v1/order/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJyb2xlIjoiQ1VTVE9NRVIiLCJpYXQiOjE3MzU2NjE1NjQsImV4cCI6MTczNTY2NTE2NH0.EQBxvNMLEvQBnX5KlD42NhsLMaIC7WLdAVxh3ZSKrTk
+
+{
+    "name": "Order 1 Update",
+    "description": "This is the first order update",
+    "specifications": "This is the first order specifications update"
+}
+
+### Cancel Order
+PATCH http://localhost:8080/api/v1/order/1/cancel
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJyb2xlIjoiQ1VTVE9NRVIiLCJpYXQiOjE3MzU2NjE1NjQsImV4cCI6MTczNTY2NTE2NH0.EQBxvNMLEvQBnX5KlD42NhsLMaIC7WLdAVxh3ZSKrTk

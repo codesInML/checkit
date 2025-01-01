@@ -1,0 +1,59 @@
+import {
+  Body,
+  Controller,
+  ForbiddenException,
+  Get,
+  NotFoundException,
+  Param,
+  ParseIntPipe,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
+import { OrderStatus, Role } from '@prisma/client';
+import { AuthGuard } from 'src/guards/auth.guard';
+import { CreateChatDto } from './dto/create-chat.dto';
+import { ChatService } from './chat.service';
+import { OrderService } from 'src/order/order.service';
+
+@UseGuards(AuthGuard)
+@Controller('chat')
+export class ChatController {
+  constructor(
+    private readonly chatService: ChatService,
+    private readonly orderService: OrderService,
+  ) {}
+
+  @Post()
+  async create(@Body() createChatDto: CreateChatDto, @Req() req) {
+    const { user_id, role } = req.user;
+
+    await this.validateIsUserOrder(createChatDto.order_id, user_id, role);
+    createChatDto.user_id = user_id;
+    createChatDto.role = role;
+
+    await this.chatService.create(createChatDto);
+
+    return { message: 'Message sent' };
+  }
+
+  @Get(':id')
+  async findAll(@Param('id', ParseIntPipe) order_id: number, @Req() req) {
+    const { user_id, role } = req.user;
+
+    await this.validateIsUserOrder(order_id, user_id, role);
+
+    return await this.chatService.findMany(order_id);
+  }
+
+  async validateIsUserOrder(id: number, user_id: number, role: Role) {
+    const order = await this.orderService.findOne(id);
+    if (!order) throw new NotFoundException('Order not found');
+
+    if (order.user_id !== user_id && role !== Role.ADMIN)
+      throw new ForbiddenException('Not allowed');
+
+    if (order.status !== OrderStatus.REVIEWING)
+      throw new ForbiddenException('Order is no longer in review');
+  }
+}
