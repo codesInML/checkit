@@ -28,7 +28,7 @@ export class ChatController {
   async create(@Body() createChatDto: CreateChatDto, @Req() req) {
     const { user_id, role } = req.user;
 
-    await this.validateIsUserOrder(createChatDto.order_id, user_id, role);
+    await this.validateCanSendChat(createChatDto.order_id, user_id, role);
     createChatDto.user_id = user_id;
     createChatDto.role = role;
 
@@ -41,12 +41,12 @@ export class ChatController {
   async findAll(@Param('id', ParseIntPipe) order_id: number, @Req() req) {
     const { user_id, role } = req.user;
 
-    await this.validateIsUserOrder(order_id, user_id, role);
+    await this.validateCanSendChat(order_id, user_id, role);
 
     return await this.chatService.findMany(order_id);
   }
 
-  async validateIsUserOrder(id: number, user_id: number, role: Role) {
+  async validateCanSendChat(id: number, user_id: number, role: Role) {
     const order = await this.orderService.findOne(id);
     if (!order) throw new NotFoundException('Order not found');
 

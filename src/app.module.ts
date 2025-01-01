@@ -9,6 +9,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { LoggerModule } from './logger/logger.module';
 import { OrderModule } from './order/order.module';
 import { ChatModule } from './chat/chat.module';
+import { ChatGateWayModule } from './chat-gate-way/chat-gate-way.module';
 
 @Module({
   imports: [
@@ -30,6 +31,8 @@ import { ChatModule } from './chat/chat.module';
     LoggerModule,
     OrderModule,
     ChatModule,
+    ChatGateWayModule,
+    ChatGateWayModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: ThrottlerGuard }],

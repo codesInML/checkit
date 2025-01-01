@@ -1,5 +1,11 @@
 import { Role } from '@prisma/client';
-import { IsEnum, IsInt, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsEnum,
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateChatDto {
   @IsString()
@@ -11,8 +17,10 @@ export class CreateChatDto {
   order_id: number;
 
   @IsInt()
+  @IsOptional()
   user_id: number;
 
   @IsEnum(Role)
+  @IsOptional()
   role: string;
 }

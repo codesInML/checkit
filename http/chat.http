@@ -1,0 +1,14 @@
+### Create Chat
+POST http://localhost:8080/api/v1/chat
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MzU3NDMwNjAsImV4cCI6MTczNTc0NjY2MH0.-57PRj5z15zSr7qTPQslIcnJScrGRE5RHWL5FjgrJF0
+
+{
+    "message": "Let's discuss the order",
+    "order_id": 2
+}
+
+### Get All Chats
+GET http://localhost:8080/api/v1/chat/2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MzU3NDMwNjAsImV4cCI6MTczNTc0NjY2MH0.-57PRj5z15zSr7qTPQslIcnJScrGRE5RHWL5FjgrJF0

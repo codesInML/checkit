@@ -33,6 +33,18 @@ export class OrderService {
     });
   }
 
+  async getReviewingOrders(user_id: number) {
+    return this.databaseService.order.findMany({
+      where: { status: OrderStatus.REVIEWING, user_id },
+    });
+  }
+
+  async getUsersReviewingOrders(user_ids: number[]) {
+    return this.databaseService.order.findMany({
+      where: { status: OrderStatus.REVIEWING, user_id: { in: user_ids } },
+    });
+  }
+
   async cancelOrder(id: number) {
     return this.databaseService.order.update({
       where: { id },

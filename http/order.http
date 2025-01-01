@@ -1,10 +1,10 @@
 ### Create Order
 POST http://localhost:8080/api/v1/order
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJyb2xlIjoiQ1VTVE9NRVIiLCJpYXQiOjE3MzU2NjE1NjQsImV4cCI6MTczNTY2NTE2NH0.EQBxvNMLEvQBnX5KlD42NhsLMaIC7WLdAVxh3ZSKrTk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1LCJyb2xlIjoiQ1VTVE9NRVIiLCJpYXQiOjE3MzU3NjU0MDUsImV4cCI6MTczNTc2OTAwNX0.6A2nD2Nv6ufZ0i-eRTCl575BvwOyWjeaYa-AUOuQotc
 
 {
-    "name": "Order 2",
+    "name": "Order 3",
     "description": "This is the second order",
     "specifications": "This is the second order specifications",
     "quantity": 10,
@@ -14,17 +14,17 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJyb
 ### Get Order
 GET http://localhost:8080/api/v1/order/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJyb2xlIjoiQ1VTVE9NRVIiLCJpYXQiOjE3MzU2NjE1NjQsImV4cCI6MTczNTY2NTE2NH0.EQBxvNMLEvQBnX5KlD42NhsLMaIC7WLdAVxh3ZSKrTk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MzU3NDMwNjAsImV4cCI6MTczNTc0NjY2MH0.-57PRj5z15zSr7qTPQslIcnJScrGRE5RHWL5FjgrJF0
 
 ### Get All Orders
 GET http://localhost:8080/api/v1/order
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJyb2xlIjoiQ1VTVE9NRVIiLCJpYXQiOjE3MzU2NjE1NjQsImV4cCI6MTczNTY2NTE2NH0.EQBxvNMLEvQBnX5KlD42NhsLMaIC7WLdAVxh3ZSKrTk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MzU3NDMwNjAsImV4cCI6MTczNTc0NjY2MH0.-57PRj5z15zSr7qTPQslIcnJScrGRE5RHWL5FjgrJF0
 
 ### Update Order
 PATCH http://localhost:8080/api/v1/order/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJyb2xlIjoiQ1VTVE9NRVIiLCJpYXQiOjE3MzU2NjE1NjQsImV4cCI6MTczNTY2NTE2NH0.EQBxvNMLEvQBnX5KlD42NhsLMaIC7WLdAVxh3ZSKrTk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MzU3NDMwNjAsImV4cCI6MTczNTc0NjY2MH0.-57PRj5z15zSr7qTPQslIcnJScrGRE5RHWL5FjgrJF0
 
 {
     "name": "Order 1 Update",
@@ -33,6 +33,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJyb
 }
 
 ### Cancel Order
-PATCH http://localhost:8080/api/v1/order/1/cancel
+PATCH http://localhost:8080/api/v1/order/3/cancel
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJyb2xlIjoiQ1VTVE9NRVIiLCJpYXQiOjE3MzU2NjE1NjQsImV4cCI6MTczNTY2NTE2NH0.EQBxvNMLEvQBnX5KlD42NhsLMaIC7WLdAVxh3ZSKrTk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1LCJyb2xlIjoiQ1VTVE9NRVIiLCJpYXQiOjE3MzU3NjU0MDUsImV4cCI6MTczNTc2OTAwNX0.6A2nD2Nv6ufZ0i-eRTCl575BvwOyWjeaYa-AUOuQotc
