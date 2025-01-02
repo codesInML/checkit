@@ -75,6 +75,6 @@ export class AuthController {
       `User with email ${email} logged in\t${ip}`,
       AuthController.name,
     );
-    return { accessToken };
+    return { accessToken, role: user.role };
   }
 }

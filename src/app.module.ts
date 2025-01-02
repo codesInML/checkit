@@ -20,12 +20,12 @@ import { ChatGateWayModule } from './chat-gate-way/chat-gate-way.module';
       {
         name: 'short',
         ttl: 1000,
-        limit: 3,
+        limit: 10,
       },
       {
         name: 'long',
         ttl: 60000,
-        limit: 100,
+        limit: 150,
       },
     ]),
     LoggerModule,
