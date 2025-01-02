@@ -2,6 +2,7 @@ import {
   Body,
   ConflictException,
   Controller,
+  HttpCode,
   Ip,
   Post,
   UnauthorizedException,
@@ -10,6 +11,7 @@ import { AuthService } from './auth.service';
 import { SignupDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
 import { LoggerService } from 'src/logger/logger.service';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
@@ -17,6 +19,12 @@ export class AuthController {
   private readonly logger = new LoggerService(AuthController.name);
 
   @Post('signup')
+  @ApiOperation({ summary: 'Signup a user' })
+  @ApiResponse({
+    status: 201,
+    description: 'User has been successfully created.',
+  })
+  @ApiResponse({ status: 409, description: 'User with email already exists' })
   async signup(@Body() signupDto: SignupDto, @Ip() ip: string) {
     const { email, password, first_name, last_name, role } = signupDto;
     const user = await this.authService.findByEmail(email);
@@ -41,6 +49,10 @@ export class AuthController {
   }
 
   @Post('login')
+  @HttpCode(200)
+  @ApiOperation({ summary: 'Login a user' })
+  @ApiResponse({ status: 200, description: 'User logged in successfully.' })
+  @ApiResponse({ status: 401, description: 'Invalid credentials.' })
   async login(@Body() loginDto: LoginDto, @Ip() ip: string) {
     const { email, password } = loginDto;
 

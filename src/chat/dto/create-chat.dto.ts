@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Role } from '@prisma/client';
 import {
   IsEnum,
@@ -8,10 +9,16 @@ import {
 } from 'class-validator';
 
 export class CreateChatDto {
+  @ApiProperty({
+    example: 'Let me know when you are ready to order',
+  })
   @IsString()
   @IsNotEmpty()
   message: string;
 
+  @ApiProperty({
+    example: 89,
+  })
   @IsInt()
   @IsNotEmpty()
   order_id: number;

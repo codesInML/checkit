@@ -18,7 +18,10 @@ import { UpdateOrderDto } from './dto/update-order.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { OrderStatus, Role } from '@prisma/client';
 import { LoggerService } from 'src/logger/logger.service';
+import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
+@ApiBearerAuth()
+@ApiResponse({ status: 401, description: 'Unauthorized.' })
 @UseGuards(AuthGuard)
 @Controller('order')
 export class OrderController {
@@ -26,6 +29,9 @@ export class OrderController {
   private readonly logger = new LoggerService(OrderController.name);
 
   @Post()
+  @ApiOperation({ summary: 'Create an order' })
+  @ApiResponse({ status: 201, description: 'Order created successfully.' })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
   async create(@Body() createOrderDto: CreateOrderDto, @Req() req) {
     const { user_id, role } = req.user;
 
@@ -39,6 +45,12 @@ export class OrderController {
   }
 
   @Get()
+  @ApiOperation({ summary: 'Fetch all orders' })
+  @ApiResponse({
+    status: 200,
+    description:
+      'Orders fetched successfully. If CUSTOMER, it fetches just their orders but returns all orders for ADMIN',
+  })
   async findAll(@Req() req) {
     const { user_id, role } = req.user;
     if (role === Role.CUSTOMER)
@@ -47,6 +59,10 @@ export class OrderController {
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Fetch an order by id' })
+  @ApiResponse({ status: 200, description: 'Order fetched successfully.' })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  @ApiResponse({ status: 404, description: 'Order not found.' })
   async findOne(@Param('id', ParseIntPipe) id: number, @Req() req) {
     const { user_id, role } = req.user;
     const order = await this.orderService.findOne(id);
@@ -59,6 +75,10 @@ export class OrderController {
   }
 
   @Patch(':id')
+  @ApiOperation({ summary: 'Update an order' })
+  @ApiResponse({ status: 200, description: 'Order updated successfully.' })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  @ApiResponse({ status: 404, description: 'Order not found.' })
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateOrderDto: UpdateOrderDto,
@@ -78,6 +98,10 @@ export class OrderController {
   }
 
   @Patch(':id/cancel')
+  @ApiOperation({ summary: 'Cancel an order' })
+  @ApiResponse({ status: 200, description: 'Order cancelled successfully.' })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  @ApiResponse({ status: 404, description: 'Order not found.' })
   async cancelOrder(@Param('id', ParseIntPipe) id: number, @Req() req) {
     const { user_id } = req.user;
 
@@ -93,6 +117,10 @@ export class OrderController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'Delete an order' })
+  @ApiResponse({ status: 200, description: 'Order deleted successfully.' })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  @ApiResponse({ status: 404, description: 'Order not found.' })
   async remove(@Param('id', ParseIntPipe) id: number, @Req() req) {
     const { user_id } = req.user;
 

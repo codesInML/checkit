@@ -10,12 +10,17 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { OrderStatus, Role } from '@prisma/client';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { CreateChatDto } from './dto/create-chat.dto';
 import { ChatService } from './chat.service';
 import { OrderService } from 'src/order/order.service';
 
+@ApiBearerAuth()
+@ApiResponse({ status: 401, description: 'Unauthorized.' })
+@ApiResponse({ status: 403, description: 'Forbidden.' })
+@ApiResponse({ status: 404, description: 'Order not found.' })
 @UseGuards(AuthGuard)
 @Controller('chat')
 export class ChatController {
@@ -25,6 +30,8 @@ export class ChatController {
   ) {}
 
   @Post()
+  @ApiOperation({ summary: 'Create a chat' })
+  @ApiResponse({ status: 201, description: 'Chat created successfully.' })
   async create(@Body() createChatDto: CreateChatDto, @Req() req) {
     const { user_id, role } = req.user;
 
@@ -38,6 +45,8 @@ export class ChatController {
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Fetch all chats for an order' })
+  @ApiResponse({ status: 200, description: 'Chats fetched successfully.' })
   async findAll(@Param('id', ParseIntPipe) order_id: number, @Req() req) {
     const { user_id, role } = req.user;
 
