@@ -92,7 +92,7 @@ To send message to a room, the following payload is required in the websocket me
 
 To receive a message from any room, the client must be listening on the **receive-message** event.
 
-The websocket events does not persist the chat messages. Typically, for persistence, a http request is also made alongside the websocket request (could be immediately after the websocket request or before) on the client side. To persist a chat or fetch all the chats associated with an order, the chat endpoints found in the swagger docs is used.
+The websocket requests does not persist the chat messages. Typically, for persistence, a http request is also made alongside the websocket request (could be immediately after the websocket request or before) on the client side. To persist a chat or fetch all the chats associated with an order, the chat endpoints found in the swagger docs is used.
 
 ## License
 
