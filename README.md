@@ -66,7 +66,7 @@ So directly change the DATABASE_URL inside .env to point to a test database.
 A persistent logger was also created which logs error and certain requests to a log file found in logs/app.log on the root level of the project.
 
 ## Chat system
-For the chat system, websocket is used and in particular socket.io. The websocket request should also include a Bearer token like normal http requests. There are 3 main events for this chat system
+For the chat system, websocket is used and in particular socket.io. It runs on the same root domain url as the http server itself. That is, if your server is running on http://localhost:3000, then this is also the url you make the websocket connection to on the frontend. The websocket request should also include a Bearer token like normal http requests. There are 3 main events for this chat system
 
 * join-room
 * send-message
