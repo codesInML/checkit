@@ -1,14 +1,14 @@
 ### Create Chat
 POST http://localhost:8080/api/v1/chat
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MzU3NDMwNjAsImV4cCI6MTczNTc0NjY2MH0.-57PRj5z15zSr7qTPQslIcnJScrGRE5RHWL5FjgrJF0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2LCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MzU4OTkzMjIsImV4cCI6MTczNTkwMjkyMn0.3pzXdq3NmD_dvy2juVCmSatRP-BhixthEtBERngcaQg
 
 {
     "message": "Let's discuss the order",
-    "order_id": 2
+    "order_id": 4
 }
 
 ### Get All Chats
-GET http://localhost:8080/api/v1/chat/2
+GET http://localhost:8080/api/v1/chat/4
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MzU3NDMwNjAsImV4cCI6MTczNTc0NjY2MH0.-57PRj5z15zSr7qTPQslIcnJScrGRE5RHWL5FjgrJF0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJyb2xlIjoiQ1VTVE9NRVIiLCJpYXQiOjE3MzU4OTkxOTMsImV4cCI6MTczNTkwMjc5M30.hVUhPaSW2HQNl5cpqNtu_uE2Ycl616qXaJm7DaYZXBc

@@ -19,6 +19,7 @@ import { AuthGuard } from 'src/guards/auth.guard';
 import { OrderStatus, Role } from '@prisma/client';
 import { LoggerService } from 'src/logger/logger.service';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ProcessOrderDto } from './dto/process-order.dto';
 
 @ApiBearerAuth()
 @ApiResponse({ status: 401, description: 'Unauthorized.' })
@@ -114,6 +115,34 @@ export class OrderController {
     );
 
     return { message: 'Order cancelled' };
+  }
+
+  @Patch(':id/process')
+  @ApiOperation({ summary: 'Process an order' })
+  @ApiResponse({ status: 200, description: 'Order processed successfully.' })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  @ApiResponse({ status: 404, description: 'Order not found.' })
+  async processOrder(
+    @Param('id', ParseIntPipe) id: number,
+    @Req() req,
+    @Body() processOrderDto: ProcessOrderDto,
+  ) {
+    const { role } = req.user;
+    if (role !== Role.ADMIN) throw new ForbiddenException('Not allowed');
+
+    const order = await this.orderService.findOne(id);
+    if (!order) throw new NotFoundException('Order not found');
+
+    if (order.status !== OrderStatus.REVIEWING)
+      throw new ForbiddenException('Order is no longer in review');
+
+    await this.orderService.processOrder(id, processOrderDto);
+    this.logger.log(
+      `Processed order ${id} for user ${order.user_id}`,
+      OrderController.name,
+    );
+
+    return { message: 'Order processing' };
   }
 
   @Delete(':id')

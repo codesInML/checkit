@@ -3,6 +3,7 @@ import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { DatabaseService } from 'src/database/database.service';
 import { OrderStatus } from '@prisma/client';
+import { ProcessOrderDto } from './dto/process-order.dto';
 
 @Injectable()
 export class OrderService {
@@ -49,6 +50,13 @@ export class OrderService {
     return this.databaseService.order.update({
       where: { id },
       data: { status: OrderStatus.CANCELLED },
+    });
+  }
+
+  async processOrder(id: number, processOrderDto: ProcessOrderDto) {
+    return this.databaseService.order.update({
+      where: { id },
+      data: { status: OrderStatus.PROCESSING, ...processOrderDto },
     });
   }
 
