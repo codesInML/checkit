@@ -26,7 +26,7 @@
 
 This repository contains the code for the checkit API written with the nestjs framework. The project includes 3 main modules which are the auth, order and chat.
 
-For user's be have access to the order and chat routes they have to be authenticated. Even the websocket connection and events are all auth required. Hence a Bearer token is required for all routes.
+For user's to have access to the order and chat routes they have to be authenticated. Even the websocket connection and events are all auth required. Hence a Bearer token is required for all routes.
 
 The documentation for all endpoints is written with swagger and can be found at /api/docs of the root domain. I.e if the project is running on http://localhost:3000, then the docs is found here: http://localhost:3000/api/docs. 
 
