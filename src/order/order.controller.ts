@@ -18,7 +18,13 @@ import { UpdateOrderDto } from './dto/update-order.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { OrderStatus, Role } from '@prisma/client';
 import { LoggerService } from 'src/logger/logger.service';
-import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+} from '@nestjs/swagger';
 import { ProcessOrderDto } from './dto/process-order.dto';
 
 @ApiBearerAuth()
@@ -122,6 +128,8 @@ export class OrderController {
   @ApiResponse({ status: 200, description: 'Order processed successfully.' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @ApiResponse({ status: 404, description: 'Order not found.' })
+  @ApiParam({ name: 'id', description: 'Order ID' })
+  @ApiBody({ type: ProcessOrderDto })
   async processOrder(
     @Param('id', ParseIntPipe) id: number,
     @Req() req,
@@ -143,6 +151,30 @@ export class OrderController {
     );
 
     return { message: 'Order processing' };
+  }
+
+  @Patch(':id/complete')
+  @ApiOperation({ summary: 'Complete an order' })
+  @ApiResponse({ status: 200, description: 'Order completed successfully.' })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  @ApiResponse({ status: 404, description: 'Order not found.' })
+  async completeOrder(@Param('id', ParseIntPipe) id: number, @Req() req) {
+    const { role } = req.user;
+    if (role !== Role.ADMIN) throw new ForbiddenException('Not allowed');
+
+    const order = await this.orderService.findOne(id);
+    if (!order) throw new NotFoundException('Order not found');
+
+    if (order.status !== OrderStatus.PROCESSING)
+      throw new ForbiddenException('Order is not processing');
+
+    await this.orderService.completeOrder(id);
+    this.logger.log(
+      `Completed order ${id} for user ${order.user_id}`,
+      OrderController.name,
+    );
+
+    return { message: 'Order completed' };
   }
 
   @Delete(':id')

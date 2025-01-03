@@ -67,6 +67,13 @@ export class OrderService {
     });
   }
 
+  async completeOrder(id: number) {
+    return this.databaseService.order.update({
+      where: { id },
+      data: { status: OrderStatus.COMPLETED },
+    });
+  }
+
   async remove(id: number) {
     return this.databaseService.order.delete({ where: { id } });
   }
