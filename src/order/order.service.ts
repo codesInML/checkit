@@ -16,11 +16,16 @@ export class OrderService {
   }
 
   async findAll() {
-    return this.databaseService.order.findMany();
+    return this.databaseService.order.findMany({
+      orderBy: { created_at: 'desc' },
+    });
   }
 
   async findAllUserOrders(user_id: number) {
-    return this.databaseService.order.findMany({ where: { user_id } });
+    return this.databaseService.order.findMany({
+      where: { user_id },
+      orderBy: { created_at: 'desc' },
+    });
   }
 
   async findOne(id: number) {
@@ -37,12 +42,14 @@ export class OrderService {
   async getReviewingOrders(user_id: number) {
     return this.databaseService.order.findMany({
       where: { status: OrderStatus.REVIEWING, user_id },
+      orderBy: { created_at: 'desc' },
     });
   }
 
   async getUsersReviewingOrders(user_ids: number[]) {
     return this.databaseService.order.findMany({
       where: { status: OrderStatus.REVIEWING, user_id: { in: user_ids } },
+      orderBy: { created_at: 'desc' },
     });
   }
 
